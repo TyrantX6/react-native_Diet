@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet,
-
+  StyleSheet
 } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,7 +16,7 @@ export default App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home"
+        <Stack.Screen name="TodayScreen"
                       component={TodayScreen}
                       options={{
                         title: 'AUJOURD\'HUI',
@@ -25,9 +24,9 @@ export default App = () => {
         />
         <Stack.Screen name="AddFoodScreen"
                       component={AddFoodScreen}
-                      options={({ route }) => ({
+                      options={{
                         title: 'Ajouter un aliment'
-                      })}
+                      }}
         />
 
       </Stack.Navigator>

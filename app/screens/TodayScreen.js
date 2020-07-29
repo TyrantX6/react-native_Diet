@@ -14,9 +14,8 @@ import ListItem from "../components/ListItem";
 
 
 
-export default  TodayScreen = ({navigation}) => {
+export default  TodayScreen = ({navigation, route}) => {
 
-  const [inputNewFood, setInputNewFood] = useState('');
   const [foodList2, setFoodList2] = useState([]);
   const [foodList, setFoodList] = useState([
     {
@@ -34,8 +33,47 @@ export default  TodayScreen = ({navigation}) => {
 
   ]);
 
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(prevCount => prevCount + 1);
+
+  useEffect(() => {
+    if (route.params) {
+      let newState;
+      newState = [...foodList2,
+        {
+          id: 'id' + route.params.foodTitle ,
+          title: route.params.foodTitle,
+          photo: route.params.photo,
+        }];
+
+      setFoodList2(newState);
+    }
+  },[route.params]
+);
+
+
+
+  let routeContent = '';
+  console.log('foodlist2:', foodList2)
+  if (route.params) {
+    routeContent =
+      <View style={styles.listItemContainer}>
+        <Text>{route.params.foodTitle}</Text>
+        <TouchableOpacity
+          //onPress={() => clearRouteParams()}
+        >
+          <View>
+            <Text style={styles.listItemDeleteButton}>X</Text>
+          </View>
+        </TouchableOpacity>
+    </View>
+  } else {
+    routeContent =
+      <Text style={styles.noFoodYetText}>
+        Vous n’avez pas encore ajouté d’aliments pour ce ARNAUD.
+      </Text>
+  }
+
+
+
 
   return (
     <SafeAreaView >
@@ -57,7 +95,7 @@ export default  TodayScreen = ({navigation}) => {
             foodList.length > 0?
               <FlatList
                 data={foodList}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id}  />}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
@@ -79,18 +117,8 @@ export default  TodayScreen = ({navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
+          {routeContent}
 
-          {
-            foodList2.length > 0?
-              <FlatList
-                data={foodList}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id}  />}
-                keyExtractor={item => item.id}
-              /> :
-              <Text style={styles.noFoodYetText}>
-                Vous n’avez pas encore ajouté d’aliments pour ce repas.
-              </Text>
-          }
         </View>
 
 
@@ -110,14 +138,22 @@ export default  TodayScreen = ({navigation}) => {
           {
             foodList2.length > 0?
               <FlatList
-                data={foodList}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id}  />}
+                data={foodList2}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo = {item.photo}  />}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
                 Vous n’avez pas encore ajouté d’aliments pour ce repas.
               </Text>
           }
+        </View>
+
+
+        <View style={styles.mealContainer}>
+          <View style={styles.mealTitle}>
+            <Text style={styles.mealTitleText}>Résumé</Text>
+          </View>
+
         </View>
       </View>
 
@@ -162,6 +198,22 @@ const styles = StyleSheet.create({
     maxWidth : '80%',
     alignSelf : 'center',
     paddingVertical: 16,
+  },
+  listItemContainer : {
+    flexDirection : 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 30,
+    paddingVertical:15,
+    borderBottomColor: '#9e9e9e',
+    borderBottomWidth: 1,
+    alignItems : 'center'
+  },
+  listItemDeleteButton : {
+    color:'#EFEFEF',
+    fontSize: 22,
+    backgroundColor: '#85C685',
+    borderRadius : 20,
+    paddingHorizontal: 16
   }
 
 

@@ -3,22 +3,37 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
+  StyleSheet, Image,
 
 } from 'react-native';
 
 
 
-export default ListItem = props => {
+export default ListItem = food => {
+
+  let image;
+  if (food.photo == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png' ) {
+    image = <Text></Text>
+  } else {
+    image = <Image
+      style={styles.thumbnail}
+      source={{
+        uri: food.photo
+      }}
+    />
+  };
 
   return (
     <View style={styles.listItemContainer}>
-      <Text>{props.foodTitle}</Text>
+      <Text>{food.foodTitle}</Text>
       <TouchableOpacity
-        onPress={console.log('bouton touché')}
+        //onPress={console.log('bouton touché')}
       >
-        <View>
-          <Text style={styles.listItemDeleteButton}>X</Text>
+        <View style={styles.rightContainer}>
+          {image}
+          <View>
+            <Text style={styles.listItemDeleteButton}>X</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </View>
@@ -42,5 +57,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#85C685',
     borderRadius : 20,
     paddingHorizontal: 16
+  },
+  thumbnail : {
+    width: 40,
+    height : 40,
+    borderRadius: 20
+  },
+  rightContainer : {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '30%',
+    alignItems: 'center'
   }
 });
