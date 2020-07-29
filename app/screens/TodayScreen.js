@@ -11,6 +11,7 @@ import {
 
 } from 'react-native';
 import ListItem from "../components/ListItem";
+import AsyncStorage from "@react-native-community/async-storage";
 
 
 
@@ -19,7 +20,29 @@ export default  TodayScreen = ({navigation, route}) => {
   const [foodListBreakFast, setFoodListBreakfast] = useState([]);
   const [foodListLunch, setFoodListLunch] = useState([]);
   const [foodListDinner, setFoodListDinner] = useState([]);
-  const [foodList2, setFoodList2] = useState([]);
+
+
+  const storeData = async () => {
+    try {
+      const jsonValue = JSON.stringify(foodListBreakFast)
+      await AsyncStorage.setItem('userFoodLists', jsonValue)
+    } catch (e) {
+      console.log(e);
+      // saving error
+    }
+  }
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('userFoodLists')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+
+
 
 
   useEffect(() => {
@@ -29,18 +52,18 @@ export default  TodayScreen = ({navigation, route}) => {
         case "breakfast":
           newState = [...foodListBreakFast,
             {
-              id: 'id' + route.params.foodTitle + Math.random(route.params.foodTitle) ,
+              id: 'id' + route.params.foodTitle + Math.random() ,
               title: route.params.foodTitle,
               photo: route.params.photo,
               meal : route.params.meal,
             }];
-
           setFoodListBreakfast(newState);
+          storeData();
           break;
         case "lunch":
           newState = [...foodListLunch,
             {
-              id: 'id' + route.params.foodTitle + Math.random(route.params.foodTitle) ,
+              id: 'id' + route.params.foodTitle + Math.random() ,
               title: route.params.foodTitle,
               photo: route.params.photo,
               meal : route.params.meal,
@@ -51,7 +74,7 @@ export default  TodayScreen = ({navigation, route}) => {
         case "dinner":
           newState = [...foodListDinner,
             {
-              id: 'id' + route.params.foodTitle + Math.random(route.params.foodTitle) ,
+              id: 'id' + route.params.foodTitle + Math.random() ,
               title: route.params.foodTitle,
               photo: route.params.photo,
               meal : route.params.meal,
@@ -61,16 +84,16 @@ export default  TodayScreen = ({navigation, route}) => {
           break;
         default:
           break;
-
       }
-
     }
+    getData();
+
   },[route.params]
 );
 
   console.log('foodlistBreakfast:', foodListBreakFast)
 
-  /* Version intermédiaire basée uniquement sur item et route.params.
+  /* Version provisoire basée uniquement sur item et route.params.
 
 
   let routeContent = '';

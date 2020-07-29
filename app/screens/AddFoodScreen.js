@@ -115,7 +115,7 @@ export default AddFoodScreen = ({route}) => {
           keyExtractor={ item => item.food_name}
         /> :
           <View style={styles.loader}>
-            <LottieView source={require('../assets/24703-food-animation.json')} autoPlay loop />
+            <LottieView source={require('../assets/24703-food-animation.json')} autoPlay loop = {false} />
           </View>
       }
 
