@@ -16,43 +16,65 @@ import ListItem from "../components/ListItem";
 
 export default  TodayScreen = ({navigation, route}) => {
 
+  const [foodListBreakFast, setFoodListBreakfast] = useState([]);
+  const [foodListLunch, setFoodListLunch] = useState([]);
+  const [foodListDinner, setFoodListDinner] = useState([]);
   const [foodList2, setFoodList2] = useState([]);
-  const [foodList, setFoodList] = useState([
-    {
-      title : 'Jus d\'orange',
-      id : '1',
-    },
-    {
-      title : 'Lait',
-      id : '2',
-    },
-    {
-      title : 'Céréales',
-      id : '3',
-    },
-
-  ]);
 
 
   useEffect(() => {
     if (route.params) {
       let newState;
-      newState = [...foodList2,
-        {
-          id: 'id' + route.params.foodTitle ,
-          title: route.params.foodTitle,
-          photo: route.params.photo,
-        }];
+      switch (route.params.meal) {
+        case "breakfast":
+          newState = [...foodListBreakFast,
+            {
+              id: 'id' + route.params.foodTitle + Math.random(route.params.foodTitle) ,
+              title: route.params.foodTitle,
+              photo: route.params.photo,
+              meal : route.params.meal,
+            }];
 
-      setFoodList2(newState);
+          setFoodListBreakfast(newState);
+          break;
+        case "lunch":
+          newState = [...foodListLunch,
+            {
+              id: 'id' + route.params.foodTitle + Math.random(route.params.foodTitle) ,
+              title: route.params.foodTitle,
+              photo: route.params.photo,
+              meal : route.params.meal,
+            }];
+
+          setFoodListLunch(newState);
+          break;
+        case "dinner":
+          newState = [...foodListDinner,
+            {
+              id: 'id' + route.params.foodTitle + Math.random(route.params.foodTitle) ,
+              title: route.params.foodTitle,
+              photo: route.params.photo,
+              meal : route.params.meal,
+            }];
+
+          setFoodListDinner(newState);
+          break;
+        default:
+          break;
+
+      }
+
     }
   },[route.params]
 );
 
+  console.log('foodlistBreakfast:', foodListBreakFast)
+
+  /* Version intermédiaire basée uniquement sur item et route.params.
 
 
   let routeContent = '';
-  console.log('foodlist2:', foodList2)
+
   if (route.params) {
     routeContent =
       <View style={styles.listItemContainer}>
@@ -70,7 +92,7 @@ export default  TodayScreen = ({navigation, route}) => {
       <Text style={styles.noFoodYetText}>
         Vous n’avez pas encore ajouté d’aliments pour ce ARNAUD.
       </Text>
-  }
+  }*/
 
 
 
@@ -78,12 +100,13 @@ export default  TodayScreen = ({navigation, route}) => {
   return (
     <SafeAreaView >
       <View style={styles.body}>
+
         <View style={styles.mealContainer}>
           <View style={styles.mealTitle}>
             <Text style={styles.mealTitleText}>Petit déjeuner</Text>
             <TouchableOpacity
 
-              onPress={() => navigation.navigate('AddFoodScreen')}
+              onPress={() => navigation.navigate('AddFoodScreen', {meal:'breakfast'} )}
             >
               <View>
                 <Text style={styles.mealTitlePlusButton}>+</Text>
@@ -92,14 +115,14 @@ export default  TodayScreen = ({navigation, route}) => {
           </View>
 
           {
-            foodList.length > 0?
+            foodListBreakFast.length > 0?
               <FlatList
-                data={foodList}
+                data={foodListBreakFast}
                 renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
-                Vous n’avez pas encore ajouté d’aliments pour ce repas.
+                Vous n’avez pas encore ajouté d’aliments pour ce petit-déjeuner.
               </Text>
           }
         </View>
@@ -110,24 +133,7 @@ export default  TodayScreen = ({navigation, route}) => {
             <Text style={styles.mealTitleText}>Déjeuner</Text>
             <TouchableOpacity
 
-              onPress={() => navigation.navigate('AddFoodScreen')}
-            >
-              <View>
-                <Text style={styles.mealTitlePlusButton}>+</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {routeContent}
-
-        </View>
-
-
-        <View style={styles.mealContainer}>
-          <View style={styles.mealTitle}>
-            <Text style={styles.mealTitleText}>Diner</Text>
-            <TouchableOpacity
-
-              onPress={() => navigation.navigate('AddFoodScreen')}
+              onPress={() => navigation.navigate('AddFoodScreen', {meal:'lunch'})}
             >
               <View>
                 <Text style={styles.mealTitlePlusButton}>+</Text>
@@ -136,14 +142,41 @@ export default  TodayScreen = ({navigation, route}) => {
           </View>
 
           {
-            foodList2.length > 0?
+            foodListLunch.length > 0?
               <FlatList
-                data={foodList2}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo = {item.photo}  />}
+                data={foodListLunch}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
-                Vous n’avez pas encore ajouté d’aliments pour ce repas.
+                Vous n’avez pas encore ajouté d’aliments pour ce déjeuner.
+              </Text>
+          }
+        </View>
+
+
+        <View style={styles.mealContainer}>
+          <View style={styles.mealTitle}>
+            <Text style={styles.mealTitleText}>Diner</Text>
+            <TouchableOpacity
+
+              onPress={() => navigation.navigate('AddFoodScreen', {meal:'dinner'})}
+            >
+              <View>
+                <Text style={styles.mealTitlePlusButton}>+</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {
+            foodListDinner.length > 0?
+              <FlatList
+                data={foodListDinner}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
+                keyExtractor={item => item.id}
+              /> :
+              <Text style={styles.noFoodYetText}>
+                Vous n’avez pas encore ajouté d’aliments pour ce diner.
               </Text>
           }
         </View>

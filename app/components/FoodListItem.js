@@ -75,7 +75,8 @@ export default FoodListItem = food => {
                 foodTitle: food.foodTitle,
                 photo: food.photo,
                 id : food.id,
-                branded : food.branded
+                branded : food.branded,
+                meal : food.meal
               })}
             >
               <View>

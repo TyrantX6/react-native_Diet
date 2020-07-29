@@ -23,19 +23,34 @@ export default ListItem = food => {
     />
   };
 
+  let branded;
+  if (food.branded != undefined) {
+    branded = styles.listItemContainerBranded
+  } else {
+    branded = styles.listItemContainer
+  }
+
   return (
-    <View style={styles.listItemContainer}>
-      <Text>{food.foodTitle}</Text>
-      <TouchableOpacity
-        //onPress={console.log('bouton touché')}
-      >
-        <View style={styles.rightContainer}>
-          {image}
+
+    <View style={branded}>
+      <Text style={styles.listItemName}>
+        {food.foodTitle}
+      </Text>
+      <View style={styles.rightContainer}>
+        {image}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('TodayScreen', {
+            foodTitle: food.foodTitle,
+            photo: food.photo,
+            id : food.id,
+            branded : food.branded
+          })}
+        >
           <View>
-            <Text style={styles.listItemDeleteButton}>X</Text>
+            <Text style={styles.listItemAddButton}>X</Text>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -51,12 +66,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     alignItems : 'center'
   },
-  listItemDeleteButton : {
+  listItemAddButton : {
     color:'#EFEFEF',
     fontSize: 22,
     backgroundColor: '#85C685',
     borderRadius : 20,
-    paddingHorizontal: 16
+    paddingHorizontal: 13,
+    paddingVertical: 4
+  },
+  listItemName : {
+    color:'#0c2900',
+    maxWidth : '60%',
+    textTransform : 'capitalize'
   },
   thumbnail : {
     width: 40,

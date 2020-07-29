@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { SearchBar } from 'react-native-elements';
 import { Icon } from 'react-native-vector-icons/Ionicons';
+import LottieView from 'lottie-react-native';
 
 
 
@@ -18,7 +19,7 @@ import {
 import FoodListItem from "../components/FoodListItem";
 
 
-export default AddFoodScreen = ( {}) => {
+export default AddFoodScreen = ({route}) => {
 
   const [searchInput, setSearchInput] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -85,6 +86,9 @@ export default AddFoodScreen = ( {}) => {
 
   };
 
+  console.log('route params breakfast:', route.params);
+
+
 
 
   return (
@@ -103,12 +107,17 @@ export default AddFoodScreen = ( {}) => {
         lightTheme
       />
 
-      <FlatList
-        data={searchList}
-        renderItem={({ item }) => <FoodListItem foodTitle={item.food_name} photo={item.photo.thumb} id = {item.tag_id} branded = {item.brand_name}/>}
-        keyExtractor={ item => item.food_name}
-      />
-
+      {
+        searchList.length > 0 ?
+          <FlatList
+          data={searchList}
+          renderItem={({ item }) => <FoodListItem foodTitle={item.food_name} photo={item.photo.thumb} id = {item.tag_id} branded = {item.brand_name} meal = {route.params.meal}/>}
+          keyExtractor={ item => item.food_name}
+        /> :
+          <View style={styles.loader}>
+            <LottieView source={require('../assets/24703-food-animation.json')} autoPlay loop />
+          </View>
+      }
 
 
     </SafeAreaView>
@@ -125,6 +134,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 20,
   },
+  loader : {
+    width: 350,
+    height: 350,
+    alignSelf : 'center',
+  }
 
 
 });
