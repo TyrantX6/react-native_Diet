@@ -19,7 +19,11 @@ export default App = () => {
         <Stack.Screen name="TodayScreen"
                       component={TodayScreen}
                       options={{
-                        title: 'AUJOURD\'HUI',
+                        title: 'Aujourd\'hui',
+                        headerStyle: {
+                          backgroundColor: '#56AD00',
+                        },
+                        headerTintColor: 'white',
                       }}
         />
         <Stack.Screen name="AddFoodScreen"

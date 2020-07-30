@@ -9,12 +9,15 @@ import {
 } from 'react-native'
 
 import {useNavigation} from "@react-navigation/core";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 
 export default FoodListItem = food => {
 
   const navigation = useNavigation();
+
+  const plusIcon = <Icon name='plus-circle-outline' size={30} color="#0c2900" />;
 
 
   let image;
@@ -80,7 +83,7 @@ export default FoodListItem = food => {
               })}
             >
               <View>
-                <Text style={styles.listItemAddButton}>+</Text>
+                <Text style={styles.listItemAddButton}>{plusIcon}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -118,20 +121,17 @@ const styles = StyleSheet.create({
     borderRadius : 12,
     },
   listItemName : {
+    fontSize: 16,
+    fontWeight : 'bold',
     color:'#0c2900',
     maxWidth : '60%',
     textTransform : 'capitalize'
   },
   listItemAddButton : {
-    color:'#0c2900',
-    fontSize: 24,
     backgroundColor: '#85C685',
-    borderRadius : 20,
-    paddingHorizontal: 15,
-    height: 40,
-    textAlignVertical : 'center'
+    borderRadius : 26,
+    padding: 4,
   },
-
   thumbnail : {
     width: 40,
     height : 40,

@@ -7,9 +7,15 @@ import {
 
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
+
 
 
 export default ListItem = food => {
+
+  const xIcon = <Icon name='minus-circle-outline' size={26} color="white" />;
 
   let image;
   if (food.photo == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png' ) {
@@ -43,7 +49,7 @@ export default ListItem = food => {
           onPress={() => food.removeAction(food,'delete')}
         >
           <View>
-            <Text style={styles.listItemDeleteButton}>X</Text>
+            <Text style={styles.listItemDeleteButton}>{xIcon}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -64,14 +70,15 @@ const styles = StyleSheet.create({
   },
   listItemDeleteButton : {
     color:'#EFEFEF',
-    fontSize: 22,
     backgroundColor: '#85C685',
-    borderRadius : 20,
-    paddingHorizontal: 13,
-    paddingVertical: 4
+    borderRadius : 30,
+    padding: 4,
+
   },
   listItemName : {
     color:'#0c2900',
+    fontSize: 16,
+    fontWeight : 'bold',
     maxWidth : '60%',
     textTransform : 'capitalize'
   },
