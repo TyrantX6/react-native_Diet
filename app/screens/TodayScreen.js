@@ -21,6 +21,47 @@ export default  TodayScreen = ({navigation, route}) => {
   const [foodListLunch, setFoodListLunch] = useState([]);
   const [foodListDinner, setFoodListDinner] = useState([]);
 
+  const actionOnTask = async (food, action) => {
+    try {
+      if (!food) throw new Error("Mauvais item!");
+
+      let newStateAfterDelete1 = [...foodListBreakfast];
+      let newStateAfterDelete2 = [...foodListLunch];
+      let newStateAfterDelete3 = [...foodListDinner];
+
+
+      switch (action) {
+        case 'delete':
+          switch (food.meal) {
+            case "Breakfast": newStateAfterDelete1 = foodListBreakfast.filter(({id}) => id !== food.id);
+              break;
+            case "Lunch": newStateAfterDelete2 = foodListLunch.filter(({id}) => id !== food.id);
+              break;
+            case "Dinner": newStateAfterDelete3 = foodListDinner.filter(({id}) => id !== food.id);
+              break;
+            default:
+              break;
+          }
+          break;
+        default:
+          break;
+      }
+      //Update Component by State
+      switch (food.meal) {
+        case "Breakfast": setFoodListBreakfast(newStateAfterDelete1);
+          break;
+        case "Lunch": setFoodListLunch(newStateAfterDelete2);
+          break;
+        case "Dinner": setFoodListDinner(newStateAfterDelete3);
+          break;
+        default:
+          break;
+      }
+
+    } catch (e) {
+      console.log('deleting error', e);
+    }
+  }
 
   const getDataMeal1 = async () => {
     try {
@@ -59,7 +100,7 @@ export default  TodayScreen = ({navigation, route}) => {
     getDataMeal1();
     getDataMeal2();
     getDataMeal3();
-  }, []
+  }, [route.params]
   )
 
 
@@ -116,32 +157,7 @@ export default  TodayScreen = ({navigation, route}) => {
 
   console.log('foodlistBreakfast:', foodListBreakfast)
 
-  const actionOnTask = async (food, action) => {
-    try {
-      if (!food) throw new Error("Mauvais item!");
-      let newState3 = [...foodListBreakfast];
-      switch (action) {
-        case 'delete':
-        switch (food.meal) {
-          case "Breakfast": newState3 = foodListBreakfast.filter(({id}) => id !== food.id);
-            break;
-          case "Lunch": newState3 = foodListLunch.filter(({id}) => id !== food.id);
-            break;
-          case "Dinner": newState3 = foodListDinner.filter(({id}) => id !== food.id);
-            break;
-          default:
-            break;
-        }
-          break;
-        default:
-          break;
-      }
-      //Update Component State
-      setFoodListBreakfast(newState3);
-    } catch (e) {
-      console.log('deleting error', e);
-    }
-  }
+
 
   /* Version provisoire basée uniquement sur item et route.params.
 
@@ -217,7 +233,7 @@ console.log('listItem ', foodListBreakfast )
             foodListLunch.length > 0?
               <FlatList
                 data={foodListLunch}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} removeAction={actionOnTask}/>}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} meal={item.meal} specificState={'foodListBreakfast'} removeAction={actionOnTask}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
@@ -244,7 +260,7 @@ console.log('listItem ', foodListBreakfast )
             foodListDinner.length > 0?
               <FlatList
                 data={foodListDinner}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} removeAction={actionOnTask}/>}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} meal={item.meal} specificState={'foodListBreakfast'} removeAction={actionOnTask}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
