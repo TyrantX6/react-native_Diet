@@ -10,15 +10,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-
-
-
 export default ListItem = food => {
 
-  const xIcon = <Icon name='minus-circle-outline' size={26} color="white" />;
+  const xIcon = <Icon name='minus-circle-outline' size={26} color="white"/>;
 
   let image;
-  if (food.photo == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png' ) {
+  if (food.photo == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png') {
     image = <Text></Text>
   } else {
     image = <Image
@@ -27,7 +24,8 @@ export default ListItem = food => {
         uri: food.photo
       }}
     />
-  };
+  }
+  ;
 
   let branded;
   if (food.branded != undefined) {
@@ -46,7 +44,7 @@ export default ListItem = food => {
       <View style={styles.rightContainer}>
         {image}
         <TouchableOpacity
-          onPress={() => food.removeAction(food,'delete')}
+          onPress={() => food.removeAction(food, 'delete')}
         >
           <View>
             <Text style={styles.listItemDeleteButton}>{xIcon}</Text>
@@ -59,35 +57,35 @@ export default ListItem = food => {
 
 const styles = StyleSheet.create({
 
-  listItemContainer : {
-    flexDirection : 'row',
+  listItemContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 30,
-    paddingVertical:15,
+    paddingVertical: 15,
     borderBottomColor: '#9e9e9e',
     borderBottomWidth: 1,
-    alignItems : 'center'
+    alignItems: 'center'
   },
-  listItemDeleteButton : {
-    color:'#EFEFEF',
+  listItemDeleteButton: {
+    color: '#EFEFEF',
     backgroundColor: '#85C685',
-    borderRadius : 30,
+    borderRadius: 30,
     padding: 4,
 
   },
-  listItemName : {
-    color:'#0c2900',
+  listItemName: {
+    color: '#0c2900',
     fontSize: 16,
-    fontWeight : 'bold',
-    maxWidth : '60%',
-    textTransform : 'capitalize'
+    fontWeight: 'bold',
+    maxWidth: '60%',
+    textTransform: 'capitalize'
   },
-  thumbnail : {
+  thumbnail: {
     width: 40,
-    height : 40,
+    height: 40,
     borderRadius: 20
   },
-  rightContainer : {
+  rightContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '30%',

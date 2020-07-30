@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {SearchBar} from 'react-native-elements';
 import {Icon} from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
@@ -10,9 +10,6 @@ import {
   FlatList,
   SafeAreaView,
   Text,
-  Button,
-  TextInput,
-  TouchableOpacity,
   StyleSheet
 } from 'react-native';
 
@@ -102,7 +99,6 @@ export default AddFoodScreen = ({route}) => {
                 <Text style={styles.warning}>Pas de résultats pour le moment, lancez une recherche!</Text>
               </View>
             </View>
-
 
 
         }

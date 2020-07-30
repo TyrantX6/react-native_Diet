@@ -270,7 +270,8 @@ export default TodayScreen = ({navigation, route}) => {
                 <Text style={styles.summaryTitle}>Résumé</Text>
               </View>
               <Text style={styles.summary}>Vous avez consommé {foodCount} ingrédients aujourd'hui!</Text>
-              <Text style={styles.summary2}>Dont {foodListBreakfast.length} au petit déjeuner, {foodListLunch.length} au déjeuner et {foodListDinner.length} au diner.</Text>
+              <Text style={styles.summary2}>Dont {foodListBreakfast.length} au petit déjeuner, {foodListLunch.length} au
+                déjeuner et {foodListDinner.length} au diner.</Text>
               <Text style={styles.footer}>By Thomas Pottier</Text>
             </View>
           </View>
@@ -350,14 +351,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 20,
     maxWidth: '90%',
-    alignSelf :'center'
+    alignSelf: 'center'
   },
   summary2: {
     textAlign: 'center',
     fontSize: 16,
     paddingVertical: 16,
     maxWidth: '90%',
-    alignSelf :'center'
+    alignSelf: 'center'
   },
   footer: {
     textAlign: 'center',

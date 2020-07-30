@@ -3,8 +3,8 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import TodayScreen from './screens/TodayScreen';
 import AddFoodScreen from './screens/AddFoodScreen';
 
@@ -40,6 +40,4 @@ export default App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});

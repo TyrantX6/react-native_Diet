@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -12,16 +12,15 @@ import {useNavigation} from "@react-navigation/core";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-
 export default FoodListItem = food => {
 
   const navigation = useNavigation();
 
-  const plusIcon = <Icon name='plus-circle-outline' size={30} color="#0c2900" />;
+  const plusIcon = <Icon name='plus-circle-outline' size={30} color="#0c2900"/>;
 
 
   let image;
-  if (food.photo == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png' ) {
+  if (food.photo == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png') {
     image = <Text></Text>
   } else {
     image = <Image
@@ -30,7 +29,8 @@ export default FoodListItem = food => {
         uri: food.photo
       }}
     />
-  };
+  }
+  ;
 
   let branded;
   if (food.branded != undefined) {
@@ -43,52 +43,29 @@ export default FoodListItem = food => {
   //console.log('food list item:', props);
   //console.log('branded:', props.branded);
 
-
-  /*const addFood= async () => {
-
-    let newFoodState = [...foodList,
-      {
-        id: props.foodTitle,
-        title: props.foodTitle,
-        photo: props.photo,
-        branded: props.branded
-      }];
-
-
-    //Update Component State
-    setFoodList(newFoodState);
-
-
-  }
-
-  console.log('food title item:', food.foodTitle);
-*/
-
   return (
 
-
-        <View style={branded}>
-          <Text style={styles.listItemName}>
-            {food.foodTitle}
-          </Text>
-          <View style={styles.rightContainer}>
-            {image}
-            <TouchableOpacity
-              onPress={() => navigation.navigate('TodayScreen', {
-                foodTitle: food.foodTitle,
-                photo: food.photo,
-                id : food.id,
-                branded : food.branded,
-                meal : food.meal
-              })}
-            >
-              <View>
-                <Text style={styles.listItemAddButton}>{plusIcon}</Text>
-              </View>
-            </TouchableOpacity>
+    <View style={branded}>
+      <Text style={styles.listItemName}>
+        {food.foodTitle}
+      </Text>
+      <View style={styles.rightContainer}>
+        {image}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('TodayScreen', {
+            foodTitle: food.foodTitle,
+            photo: food.photo,
+            id: food.id,
+            branded: food.branded,
+            meal: food.meal
+          })}
+        >
+          <View>
+            <Text style={styles.listItemAddButton}>{plusIcon}</Text>
           </View>
-        </View>
-
+        </TouchableOpacity>
+      </View>
+    </View>
 
 
   );
@@ -96,48 +73,48 @@ export default FoodListItem = food => {
 
 const styles = StyleSheet.create({
 
-  listItemContainer : {
-    flexDirection : 'row',
+  listItemContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 10,
-    paddingVertical:15,
-    backgroundColor : '#ededed',
+    paddingVertical: 15,
+    backgroundColor: '#ededed',
     borderBottomColor: '#9e9e9e',
     borderBottomWidth: 1,
-    alignItems : 'center',
+    alignItems: 'center',
     paddingHorizontal: 12,
-    borderRadius : 12,
+    borderRadius: 12,
   },
-    listItemContainerBranded: {
-    flexDirection : 'row',
+  listItemContainerBranded: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 10,
-    paddingVertical:15,
+    paddingVertical: 15,
     borderBottomColor: '#9e9e9e',
     borderBottomWidth: 1,
-    alignItems : 'center',
-    backgroundColor : '#DBDBDB',
+    alignItems: 'center',
+    backgroundColor: '#DBDBDB',
     paddingHorizontal: 12,
-    borderRadius : 12,
-    },
-  listItemName : {
+    borderRadius: 12,
+  },
+  listItemName: {
     fontSize: 16,
-    fontWeight : 'bold',
-    color:'#0c2900',
-    maxWidth : '60%',
-    textTransform : 'capitalize'
+    fontWeight: 'bold',
+    color: '#0c2900',
+    maxWidth: '60%',
+    textTransform: 'capitalize'
   },
-  listItemAddButton : {
+  listItemAddButton: {
     backgroundColor: '#85C685',
-    borderRadius : 26,
+    borderRadius: 26,
     padding: 4,
   },
-  thumbnail : {
+  thumbnail: {
     width: 40,
-    height : 40,
+    height: 40,
     borderRadius: 20
   },
-  rightContainer : {
+  rightContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '30%',
