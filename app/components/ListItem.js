@@ -30,6 +30,7 @@ export default ListItem = food => {
     branded = styles.listItemContainer
   }
 
+
   return (
 
     <View style={branded}>
@@ -39,15 +40,10 @@ export default ListItem = food => {
       <View style={styles.rightContainer}>
         {image}
         <TouchableOpacity
-          onPress={() => navigation.navigate('TodayScreen', {
-            foodTitle: food.foodTitle,
-            photo: food.photo,
-            id : food.id,
-            branded : food.branded
-          })}
+          onPress={() => food.removeAction(food,'delete')}
         >
           <View>
-            <Text style={styles.listItemAddButton}>X</Text>
+            <Text style={styles.listItemDeleteButton}>X</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -66,7 +62,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     alignItems : 'center'
   },
-  listItemAddButton : {
+  listItemDeleteButton : {
     color:'#EFEFEF',
     fontSize: 22,
     backgroundColor: '#85C685',

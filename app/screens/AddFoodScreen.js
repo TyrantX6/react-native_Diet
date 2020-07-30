@@ -66,22 +66,27 @@ export default AddFoodScreen = ({route}) => {
 
 
   const newQuery = async () => {
-    let responseResults = await fetch(fullApiRequest, {
-        method: 'GET',
-        headers : {
-          'x-app-id' : '8783b4a5',
-          'x-app-key' : '13fe6bc8b58cb41ca267385336522967'
+    try {
+      let responseResults = await fetch(fullApiRequest, {
+          method: 'GET',
+          headers : {
+            'x-app-id' : '8783b4a5',
+            'x-app-key' : '13fe6bc8b58cb41ca267385336522967'
+          }
         }
+      )
+
+
+
+      let jsonResponseResults = await responseResults.json(); {
+        let combinedArrays = (jsonResponseResults.common).concat(jsonResponseResults.branded)
+        //console.log('json:', combinedArrays)
+        setSearchList(combinedArrays);
       }
-    )
-
-
-
-    let jsonResponseResults = await responseResults.json(); {
-      let combinedArrays = (jsonResponseResults.common).concat(jsonResponseResults.branded)
-      //console.log('json:', combinedArrays)
-      setSearchList(combinedArrays);
+    } catch (e) {
+      alert('Pas de connexion 😱, vérifiez votre réseau avant de relancer une recherche!  😉')
     }
+
 
 
   };
@@ -99,11 +104,13 @@ export default AddFoodScreen = ({route}) => {
     <SafeAreaView >
 
       <SearchBar
-        icon = {{type: 'material-community'}}
+        icon = {{type: 'feather'}}
         placeholder="Ma recherche d'aliments"
         onChangeText={setSearchInput}
         value={searchInput}
         onSubmitEditing={newQuery}
+        platform="default"
+        round
         lightTheme
       />
 

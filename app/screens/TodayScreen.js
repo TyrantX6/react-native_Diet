@@ -17,30 +17,50 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 export default  TodayScreen = ({navigation, route}) => {
 
-  const [foodListBreakFast, setFoodListBreakfast] = useState([]);
+  const [foodListBreakfast, setFoodListBreakfast] = useState([]);
   const [foodListLunch, setFoodListLunch] = useState([]);
   const [foodListDinner, setFoodListDinner] = useState([]);
 
 
-  const storeData = async () => {
+  const getDataMeal1 = async () => {
     try {
-      const jsonValue = JSON.stringify(foodListBreakFast)
-      await AsyncStorage.setItem('userFoodLists', jsonValue)
-    } catch (e) {
-      console.log(e);
-      // saving error
-    }
-  }
-
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('userFoodLists')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+      const localStateBreakfast = await AsyncStorage.getItem('breakfast');
+      if(localStateBreakfast!== null) {
+        setFoodListBreakfast(JSON.parse(localStateBreakfast));
+      } else { null }
     } catch(e) {
-      // error reading value
+      console.log('async error:', e)
     }
   }
 
+  const getDataMeal2 = async () => {
+    try {
+      const localStateLunch = await AsyncStorage.getItem('lunch');
+      if(localStateLunch !== null) {
+        setFoodListLunch(JSON.parse(localStateLunch));
+      } else { null }
+    } catch(e) {
+      console.log('async error:', e)
+    }
+  }
+
+  const getDataMeal3 = async () => {
+    try {
+      const localStateDinner = await AsyncStorage.getItem('dinner');
+      if(localStateDinner !== null) {
+        setFoodListDinner(JSON.parse(localStateDinner));
+      } else { null }
+    } catch(e) {
+      console.log('async error:', e)
+    }
+  }
+
+  useEffect( () => {
+    getDataMeal1();
+    getDataMeal2();
+    getDataMeal3();
+  }, []
+  )
 
 
 
@@ -49,49 +69,79 @@ export default  TodayScreen = ({navigation, route}) => {
     if (route.params) {
       let newState;
       switch (route.params.meal) {
-        case "breakfast":
-          newState = [...foodListBreakFast,
+        case "Breakfast":
+          newState = [...foodListBreakfast,
             {
               id: 'id' + route.params.foodTitle + Math.random() ,
               title: route.params.foodTitle,
               photo: route.params.photo,
               meal : route.params.meal,
+              specificState : 'foodListBreakfast'
             }];
           setFoodListBreakfast(newState);
-          storeData();
+          AsyncStorage.setItem('breakfast', JSON.stringify(newState));
+
           break;
-        case "lunch":
+        case "Lunch":
           newState = [...foodListLunch,
             {
               id: 'id' + route.params.foodTitle + Math.random() ,
               title: route.params.foodTitle,
               photo: route.params.photo,
               meal : route.params.meal,
+              specificState : 'foodListLunch'
             }];
-
           setFoodListLunch(newState);
+          AsyncStorage.setItem('lunch', JSON.stringify(newState));
           break;
-        case "dinner":
+        case "Dinner":
           newState = [...foodListDinner,
             {
               id: 'id' + route.params.foodTitle + Math.random() ,
               title: route.params.foodTitle,
               photo: route.params.photo,
               meal : route.params.meal,
+              specificState : 'foodListDinner'
             }];
-
           setFoodListDinner(newState);
+          AsyncStorage.setItem('dinner', JSON.stringify(newState));
           break;
         default:
           break;
       }
     }
-    getData();
 
   },[route.params]
 );
 
-  console.log('foodlistBreakfast:', foodListBreakFast)
+  console.log('foodlistBreakfast:', foodListBreakfast)
+
+  const actionOnTask = async (food, action) => {
+    try {
+      if (!food) throw new Error("Mauvais item!");
+      let newState3 = [...foodListBreakfast];
+      switch (action) {
+        case 'delete':
+        switch (food.meal) {
+          case "Breakfast": newState3 = foodListBreakfast.filter(({id}) => id !== food.id);
+            break;
+          case "Lunch": newState3 = foodListLunch.filter(({id}) => id !== food.id);
+            break;
+          case "Dinner": newState3 = foodListDinner.filter(({id}) => id !== food.id);
+            break;
+          default:
+            break;
+        }
+          break;
+        default:
+          break;
+      }
+      //Update Component State
+      setFoodListBreakfast(newState3);
+    } catch (e) {
+      console.log('deleting error', e);
+    }
+  }
 
   /* Version provisoire basée uniquement sur item et route.params.
 
@@ -118,8 +168,7 @@ export default  TodayScreen = ({navigation, route}) => {
   }*/
 
 
-
-
+console.log('listItem ', foodListBreakfast )
   return (
     <SafeAreaView >
       <View style={styles.body}>
@@ -129,7 +178,7 @@ export default  TodayScreen = ({navigation, route}) => {
             <Text style={styles.mealTitleText}>Petit déjeuner</Text>
             <TouchableOpacity
 
-              onPress={() => navigation.navigate('AddFoodScreen', {meal:'breakfast'} )}
+              onPress={() => navigation.navigate('AddFoodScreen', {meal:'Breakfast'} )}
             >
               <View>
                 <Text style={styles.mealTitlePlusButton}>+</Text>
@@ -138,10 +187,10 @@ export default  TodayScreen = ({navigation, route}) => {
           </View>
 
           {
-            foodListBreakFast.length > 0?
+            foodListBreakfast.length > 0?
               <FlatList
-                data={foodListBreakFast}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
+                data={foodListBreakfast}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} meal={item.meal} specificState={'foodListBreakfast'} removeAction={actionOnTask}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
@@ -156,7 +205,7 @@ export default  TodayScreen = ({navigation, route}) => {
             <Text style={styles.mealTitleText}>Déjeuner</Text>
             <TouchableOpacity
 
-              onPress={() => navigation.navigate('AddFoodScreen', {meal:'lunch'})}
+              onPress={() => navigation.navigate('AddFoodScreen', {meal:'Lunch'})}
             >
               <View>
                 <Text style={styles.mealTitlePlusButton}>+</Text>
@@ -168,7 +217,7 @@ export default  TodayScreen = ({navigation, route}) => {
             foodListLunch.length > 0?
               <FlatList
                 data={foodListLunch}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} removeAction={actionOnTask}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
@@ -183,7 +232,7 @@ export default  TodayScreen = ({navigation, route}) => {
             <Text style={styles.mealTitleText}>Diner</Text>
             <TouchableOpacity
 
-              onPress={() => navigation.navigate('AddFoodScreen', {meal:'dinner'})}
+              onPress={() => navigation.navigate('AddFoodScreen', {meal:'Dinner'})}
             >
               <View>
                 <Text style={styles.mealTitlePlusButton}>+</Text>
@@ -195,7 +244,7 @@ export default  TodayScreen = ({navigation, route}) => {
             foodListDinner.length > 0?
               <FlatList
                 data={foodListDinner}
-                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation}/>}
+                renderItem={({ item }) => <ListItem foodTitle={item.title} id = {item.id} photo={item.photo} food={item} navigation={navigation} removeAction={actionOnTask}/>}
                 keyExtractor={item => item.id}
               /> :
               <Text style={styles.noFoodYetText}>
