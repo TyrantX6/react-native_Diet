@@ -176,9 +176,9 @@ export default TodayScreen = ({navigation, route}) => {
   console.log('foodlistBreakfast:', foodListBreakfast)
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.screen}>
       <ScrollView>
-        <ImageBackground source={require('../assets/bg2.jpg')} style={styles.background} resizeMode='stretch'>
+        <ImageBackground source={require('../assets/bg3.jpg')} style={styles.background}>
           <View>
 
             <View style={styles.mealContainer}>
@@ -269,9 +269,12 @@ export default TodayScreen = ({navigation, route}) => {
               <View style={styles.mealTitle}>
                 <Text style={styles.summaryTitle}>Résumé</Text>
               </View>
-              <Text style={styles.summary}>Vous avez consommé {foodCount} ingrédients aujourd'hui!</Text>
-              <Text style={styles.summary2}>Dont {foodListBreakfast.length} au petit déjeuner, {foodListLunch.length} au
-                déjeuner et {foodListDinner.length} au diner.</Text>
+              <View style={styles.summary}>
+                <Text style={styles.summaryBlock1}>Vous avez consommé {foodCount} ingrédients aujourd'hui!</Text>
+                <Text style={styles.summaryBlock2}>Dont {foodListBreakfast.length} au petit déjeuner, {foodListLunch.length} au
+                  déjeuner et {foodListDinner.length} au diner.</Text>
+              </View>
+
               <Text style={styles.footer}>By Thomas Pottier</Text>
             </View>
           </View>
@@ -282,14 +285,13 @@ export default TodayScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  screen: {
 
+  },
   background: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-    bottom: 0
-
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   mealContainer: {
     marginTop: 12,
@@ -325,10 +327,11 @@ const styles = StyleSheet.create({
   },
   noFoodYetText: {
     flexDirection: 'row',
-    width: '100%',
-    maxWidth: '80%',
+    maxWidth: '90%',
     alignSelf: 'center',
-    paddingVertical: 16,
+    padding: 16,
+    backgroundColor: 'rgba(83, 155, 52, 0.8)',
+    borderRadius: 20
   },
   listItemContainer: {
     flexDirection: 'row',
@@ -348,17 +351,18 @@ const styles = StyleSheet.create({
   },
   summary: {
     textAlign: 'center',
-    fontSize: 20,
-    paddingVertical: 20,
+    padding: 16,
     maxWidth: '90%',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    backgroundColor: 'rgba(83, 155, 52, 0.8)',
+    borderRadius: 20
   },
-  summary2: {
-    textAlign: 'center',
+  summaryBlock1: {
+    fontSize: 18,
+    marginBottom: 8
+  },
+  summaryBlock2: {
     fontSize: 16,
-    paddingVertical: 16,
-    maxWidth: '90%',
-    alignSelf: 'center'
   },
   footer: {
     textAlign: 'center',

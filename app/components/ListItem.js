@@ -60,11 +60,16 @@ const styles = StyleSheet.create({
   listItemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 30,
+    width:'100%',
+    maxWidth:'90%',
     paddingVertical: 15,
+    paddingHorizontal: 17,
     borderBottomColor: '#9e9e9e',
-    borderBottomWidth: 1,
-    alignItems: 'center'
+    borderBottomWidth: 2,
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'rgba(83, 155, 52, 0.8)',
+    borderRadius: 20
   },
   listItemDeleteButton: {
     color: '#EFEFEF',
@@ -77,13 +82,13 @@ const styles = StyleSheet.create({
     color: '#0c2900',
     fontSize: 16,
     fontWeight: 'bold',
-    maxWidth: '60%',
-    textTransform: 'capitalize'
+    maxWidth: '70%',
+    textTransform: 'capitalize',
   },
   thumbnail: {
     width: 40,
     height: 40,
-    borderRadius: 20
+    borderRadius: 20,
   },
   rightContainer: {
     flexDirection: 'row',
