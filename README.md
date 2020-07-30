@@ -10,3 +10,6 @@ Déroulement du projet et étapes réalisées:
 - réorganisation du code app.js devient router et création du dossier screens.
 - données mockées "en dur" dans le state pour tester l'affichage.
 - téléchargement package react-native-elements et de vector-icons
+- téléchargement package lottie view
+- téléchargement package react-native-offline
+
