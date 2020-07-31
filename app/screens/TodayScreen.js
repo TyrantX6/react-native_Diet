@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
+  YellowBox,
 
 
 } from 'react-native';
@@ -22,7 +23,9 @@ export default TodayScreen = ({navigation, route}) => {
   const [foodListLunch, setFoodListLunch] = useState([]);
   const [foodListDinner, setFoodListDinner] = useState([]);
 
-  let foodCount = foodListBreakfast.length + foodListLunch.length + foodListDinner.length
+  let foodCount = foodListBreakfast.length + foodListLunch.length + foodListDinner.length;
+
+  console.disableYellowBox = true;
 
   const actionOnTask = async (food, action) => {
     try {
@@ -308,6 +311,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 20,
     alignSelf: 'center',
+    marginBottom: 6,
   },
   mealTitleText: {
     color: '#EFEFEF',
@@ -330,7 +334,7 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
     alignSelf: 'center',
     padding: 16,
-    backgroundColor: 'rgba(83, 155, 52, 0.8)',
+    backgroundColor: 'rgba(170, 201, 134, 0.9)',
     borderRadius: 20
   },
   listItemContainer: {
@@ -354,7 +358,7 @@ const styles = StyleSheet.create({
     padding: 16,
     maxWidth: '90%',
     alignSelf: 'center',
-    backgroundColor: 'rgba(83, 155, 52, 0.8)',
+    backgroundColor: 'rgba(170, 201, 134, 0.9)',
     borderRadius: 20
   },
   summaryBlock1: {

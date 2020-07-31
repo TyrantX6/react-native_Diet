@@ -64,11 +64,9 @@ const styles = StyleSheet.create({
     maxWidth:'90%',
     paddingVertical: 15,
     paddingHorizontal: 17,
-    borderBottomColor: '#9e9e9e',
-    borderBottomWidth: 2,
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: 'rgba(83, 155, 52, 0.8)',
+    backgroundColor: 'rgba(170, 201, 134, 0.9)',
     borderRadius: 20
   },
   listItemDeleteButton: {
